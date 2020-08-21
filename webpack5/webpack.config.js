@@ -1,3 +1,4 @@
+const  path = require('path');
 module.exports = {
   entry: {
     main: './src/index.js'
@@ -14,6 +15,15 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.js$/,
+        use: [{
+          loader: path.resolve(__dirname, 'loaders/babel-loader.js'),
+          options: {
+            data: '我是配置loader的 options'
+          }
+        }]
       }
     ]
   },
@@ -21,16 +31,16 @@ module.exports = {
   cache: {
     type: 'filesystem' // memory
   },
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       commons: {
-  //         chunks: 'all',
-  //         name: 'commons'
-  //       }
-  //     }
-  //   }
-  // },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'all',
+          name: 'commons'
+        }
+      }
+    }
+  },
   experiments: {
     topLevelAwait: true,
     asset: true,

@@ -1,3 +1,2 @@
-const data = '外部数据'
-
+const data = '数据'
 export default data

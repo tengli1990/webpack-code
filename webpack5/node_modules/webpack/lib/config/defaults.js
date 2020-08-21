@@ -537,6 +537,7 @@ const applyOutputDefaults = (
 	D(output, "webassemblyModuleFilename", "[hash].module.wasm");
 	D(output, "publicPath", "");
 	D(output, "compareBeforeEmit", true);
+	D(output, "charset", true);
 	F(output, "hotUpdateFunction", () =>
 		Template.toIdentifier(
 			"webpackHotUpdate" + Template.toIdentifier(output.uniqueName)
@@ -674,13 +675,20 @@ const applyOptimizationDefaults = (
 	D(optimization, "checkWasmTypes", production);
 	D(optimization, "mangleWasmImports", false);
 	D(optimization, "portableRecords", records);
+	D(optimization, "realContentHash", production);
 	D(optimization, "minimize", production);
 	A(optimization, "minimizer", () => [
 		{
 			apply: compiler => {
 				// Lazy load the Terser plugin
 				const TerserPlugin = require("terser-webpack-plugin");
-				new TerserPlugin().apply(compiler);
+				new TerserPlugin({
+					terserOptions: {
+						compress: {
+							passes: 2
+						}
+					}
+				}).apply(compiler);
 			}
 		}
 	]);

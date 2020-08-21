@@ -1,3 +1,2 @@
-./**/*/node_modules
-./**/*/dist
-./**/*/yarn-lock
+./webpack5/node_modules
+dist
